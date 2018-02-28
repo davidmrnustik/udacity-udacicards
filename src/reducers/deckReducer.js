@@ -9,7 +9,7 @@ const initialState = {
       {
         question: 'Where do you make Ajax requests in React?',
         answer: 'The componentDidMount lifecycle event'
-      }
+      },
     ]
   },
   JavaScript: {

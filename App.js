@@ -45,18 +45,6 @@ const MainNavigator = StackNavigator({
   }
 })
 
-store.dispatch({ type: 'ADD_DECK', payload: {
-  'New deck 3': {
-    title: 'New deck 3',
-    questions: [
-      {
-        question: 'What is a closure?',
-        answer: 'The combination of a function and the lexical environment within which that function was declared.'
-      }
-    ]
-  }
-} });
-
 export default class App extends PureComponent {
   render() {
     return (

@@ -17,30 +17,88 @@ class Quiz extends PureComponent {
   }
   state = {
     questionIndex: 0,
-    questionAnswer: 'question',
+    status: 'question',
+    score: 0,
+    voted: false,
+  }
+  onPressCorrect = () => {
+    if (this.state.voted) return alert('You have already voted!');
+    this.setState(state => ({
+      score: state.score + 1,
+      voted: true,
+    }))
+  }
+  onPressIncorrect = () => {
+    if (this.state.voted) return alert('You have already voted!');
+    this.setState({ voted: true });
+  }
+  onPressAnswer = () => {
+    this.setState(state => ({
+      status: 'answer',
+    }));
+  }
+  onPressQuestion = () => {
+    if (!this.state.voted) return alert('You have to vote!');
+    const length = this.props.questions.length - 1;
+    this.setState(state => ({
+      status: 'question',
+      voted: false,
+      questionIndex: state.questionIndex < length
+        ? state.questionIndex + 1
+        : state.questionIndex
+    }));
   }
   render() {
     const { navigation, questions } = this.props;
-    const { questionIndex } = this.state;
+    const { questionIndex, status, score, voted } = this.state;
+    const length = questions.length;
+    const title = questions[questionIndex][status];
+    const last = questionIndex === length - 1;
+    const buttons = (onPress, text) => (
+      <TouchableOpacity
+        onPress={status === 'question'
+          ? () => alert('You have to answer first.')
+          : onPress}
+      >
+        <Text>{text}</Text>
+      </TouchableOpacity>
+    )
 
     return (
       <View style={styles.container}>
-        <Text>{questionIndex + 1} / {questions.length}</Text>
+        <Text>{questionIndex + 1} / {length}</Text>
+        <Text>Score: {score}</Text>
         <View style={styles.title}>
-          <Text>{questions[questionIndex].question}</Text>
-          <TouchableOpacity>
-            <Text>Answer</Text>
-          </TouchableOpacity>
+          <Text>{title}</Text>
+          {status === 'question'
+            ? (
+              <TouchableOpacity onPress={this.onPressAnswer}>
+                <Text>Answer</Text>
+              </TouchableOpacity>
+            )
+            : !last
+                ? (
+                  <TouchableOpacity onPress={this.onPressQuestion}>
+                    <Text>Question</Text>
+                  </TouchableOpacity>
+                )
+                : null
+          }
         </View>
 
         <View style={styles.buttons}>
-          <TouchableOpacity>
-            <Text>Correct</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Text>Incorrect</Text>
-          </TouchableOpacity>
+          {last && voted && (
+            <View>
+              <Text>There are no more questions in deck. </Text>
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Text>Go back</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+          {buttons(this.onPressCorrect, 'Correct')}
+          {buttons(this.onPressIncorrect, 'Incorrect')}
         </View>
+        
       </View>
     )
   }
