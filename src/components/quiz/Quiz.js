@@ -9,8 +9,6 @@ import {
 
 class Quiz extends PureComponent {
   static navigationOptions = ({ navigation }) => {
-    const { deckId } = navigation.state.params;
-
     return {
       title: 'Quiz',
     }
@@ -88,8 +86,9 @@ class Quiz extends PureComponent {
 
         <View style={styles.buttons}>
           {last && voted && (
-            <View>
+            <View style={{ alignItems: 'center' }}>
               <Text>There are no more questions in deck. </Text>
+              <Text>Yout score is: {score}</Text>
               <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Text>Go back</Text>
               </TouchableOpacity>
@@ -122,7 +121,8 @@ const styles = StyleSheet.create({
 })
 
 function mapStateToProps({ decks }, ownProps) {
-  const deck = Object.keys(decks).filter(deck => decks[deck].title === ownProps.navigation.state.params.deckId)[0];
+  const deck = Object.keys(decks)
+    .filter(deck => decks[deck].title === ownProps.navigation.state.params.deckId)[0];
   return {
     questions: decks[deck].questions,
   }

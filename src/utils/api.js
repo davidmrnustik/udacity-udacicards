@@ -1,4 +1,8 @@
-const initialState = {
+import { AsyncStorage } from 'react-native';
+
+export const UDACICARDS_STORAGE_KEY = 'UdaciCards:decks';
+
+const dummyData = {
   React: {
     title: 'React',
     questions: [
@@ -31,18 +35,16 @@ const initialState = {
   }
 }
 
-export function decks(state = initialState, {type, payload}) {
-  switch(type) {
-    case 'RECEIVE_DECKS':
-      return {
-        ...state,
-      };
-      case 'ADD_DECK':
-        return {
-          ...state,
-          ...payload
-        };
-    default:
-      return state;
-  }
+function seedData () {
+  return AsyncStorage.setItem(UDACICARDS_STORAGE_KEY, JSON.stringify(dummyData));
+}
+
+export function getDecks () {
+  // seedData();
+  return AsyncStorage.getItem(UDACICARDS_STORAGE_KEY)
+    .then(results => {
+      return results === null
+        ? null
+        : JSON.parse(results)
+    })
 }
