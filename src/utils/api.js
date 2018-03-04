@@ -42,9 +42,20 @@ function seedData () {
 export function getDecks () {
   // seedData();
   return AsyncStorage.getItem(UDACICARDS_STORAGE_KEY)
-    .then(results => {
-      return results === null
-        ? null
-        : JSON.parse(results)
+    .then(data => {
+      return data === null
+        ? seedData()
+        : JSON.parse(data);
     })
+}
+
+const getStorageInfo = () => {
+  return AsyncStorage.getItem(UDACICARDS_STORAGE_KEY)
+    .then(data => JSON.parse(data));
+}
+
+export function submitCardToDeck (card, deck) {
+  return AsyncStorage.mergeItem(UDACICARDS_STORAGE_KEY, JSON.stringify({
+    [deck]: card,
+  }), () => console.log(getStorageInfo()))
 }

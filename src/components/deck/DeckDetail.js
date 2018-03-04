@@ -26,16 +26,22 @@ class DeckDetail extends PureComponent {
           <Text>{length} {length > 0 ? 'cards' : 'card'}</Text>
         </View>
         <View style={styles.buttons}>
-          <TouchableOpacity>
-            <Text>Add a card</Text>
-          </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.navigate('Quiz', {
+            onPress={() => navigation.navigate('AddNewCard', {
               deckId: title,
             })}
           >
-            <Text>Start Quiz</Text>
+            <Text>Add a card</Text>
           </TouchableOpacity>
+          {length > 0 && (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Quiz', {
+                deckId: title,
+              })}
+            >
+              <Text>Start Quiz</Text>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     )
@@ -59,10 +65,10 @@ const styles = StyleSheet.create({
   }
 })
 
-function mapStateToProps({ decks }, ownProps) {
-  const deck = Object.keys(decks).filter(deck => decks[deck].title === ownProps.navigation.state.params.deckId)[0];
+const mapStateToProps = ({ decks }, ownProps) => {
+  const { deckId } = ownProps.navigation.state.params;
   return {
-    deck: decks[deck],
+    deck: decks[deckId],
   }
 }
 

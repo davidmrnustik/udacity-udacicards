@@ -11,7 +11,8 @@ import { TabNavigator, StackNavigator } from 'react-navigation';
 import DeckList from './src/components/deck/DeckList';
 import AddNewDeck from './src/components/deck/AddNewDeck';
 import DeckDetail from './src/components/deck/DeckDetail';
-import Quiz from './src/components/quiz/Quiz';
+import Quiz from './src/components/card/Quiz';
+import AddNewCard from './src/components/card/AddNewCard';
 
 const Tabs = TabNavigator({
   DeckList: {
@@ -42,7 +43,10 @@ const MainNavigator = StackNavigator({
   },
   Quiz: {
     screen: Quiz,
-  }
+  },
+  AddNewCard: {
+    screen: AddNewCard,
+  },
 })
 
 export default class App extends PureComponent {

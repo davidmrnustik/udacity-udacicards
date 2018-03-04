@@ -12,20 +12,21 @@ import { getDecks } from '../../utils/api';
 
 class DeckList extends PureComponent {
   state = {
-    ready: false,
+    loading: false,
   }
 
   componentDidMount() {
+    this.setState({ saving: true });
     getDecks()
       .then(decks => this.props.receiveDecks(decks))
       .then(() => this.setState(() =>({
-        ready: true,
+        loading: false,
       })))
   }
   render() {
     const { navigation, decks } = this.props;
-    const { ready } = this.state;
-    if (ready === false) {
+    const { loading } = this.state;
+    if (loading) {
       return <Text>Loading...</Text>
     }
 
