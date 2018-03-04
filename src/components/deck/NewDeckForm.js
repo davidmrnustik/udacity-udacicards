@@ -6,21 +6,21 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
+import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 
-const validate = values => {
-  const { question, answer } = values;
+const validate = (values, { decks }) => {
+  const { title } = values;
   const errors = {};
 
-  if (!question){
-    errors.question = 'Required'
-  } else if (question.trim().length < 3) {
-    errors.question = 'Question must have 3 characters at least.';
-  }
-  if (!answer){
-    errors.answer = 'Required'
-  } else if (answer.trim().length === 0) {
-    errors.answer = 'Answer must have 1 character at least.';
+  if (!title){
+    errors.title = 'Required'
+  } else if (title.trim().length < 3) {
+    errors.title = 'Title must have 3 characters at least.';
+  } else {
+    Object.keys(decks).map(deck => {
+      if (deck === title.trim()) errors.title = 'Title is already assigned.';
+    })
   }
 
   return errors;
@@ -43,16 +43,14 @@ const renderField = ({
   )
 }
 
-let NewCardForm = ({ onSubmit, handleSubmit }) => {
+let NewDeckForm = ({ onSubmit, handleSubmit }) => {
   const submit = values => {
     onSubmit(values);
   }
   return (
     <View>
-      <Text>Question:</Text>
-      <Field name='question' component={renderField} />
-      <Text>Answer:</Text>
-      <Field name='answer' component={renderField} />
+      <Text>Title:</Text>
+      <Field name='title' component={renderField} />
       <TouchableOpacity onPress={handleSubmit(submit)}>
         <Text>Send</Text>
       </TouchableOpacity>
@@ -71,9 +69,10 @@ const styles = StyleSheet.create({
   },
 })
 
-NewCardForm = reduxForm({
-  form: 'addNewCard',
+NewDeckForm = reduxForm({
+  form: 'addDeckCard',
   validate,
-})(NewCardForm)
+})(NewDeckForm)
+NewDeckForm = connect(({ decks }) => ({ decks }))(NewDeckForm);
 
-export default NewCardForm;
+export default NewDeckForm;

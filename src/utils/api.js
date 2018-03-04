@@ -36,7 +36,12 @@ const dummyData = {
 }
 
 function seedData () {
-  return AsyncStorage.setItem(UDACICARDS_STORAGE_KEY, JSON.stringify(dummyData));
+  return AsyncStorage.setItem(UDACICARDS_STORAGE_KEY, JSON.stringify({}));
+}
+
+const getStorageInfo = () => {
+  return AsyncStorage.getItem(UDACICARDS_STORAGE_KEY)
+    .then(data => JSON.parse(data));
 }
 
 export function getDecks () {
@@ -49,13 +54,12 @@ export function getDecks () {
     })
 }
 
-const getStorageInfo = () => {
-  return AsyncStorage.getItem(UDACICARDS_STORAGE_KEY)
-    .then(data => JSON.parse(data));
-}
-
 export function submitCardToDeck (card, deck) {
   return AsyncStorage.mergeItem(UDACICARDS_STORAGE_KEY, JSON.stringify({
     [deck]: card,
-  }), () => console.log(getStorageInfo()))
+  }), () => console.log(getStorageInfo()));
+}
+
+export function submitDeck (decks) {
+  return AsyncStorage.mergeItem(UDACICARDS_STORAGE_KEY, JSON.stringify(decks), () => console.log(getStorageInfo()));
 }

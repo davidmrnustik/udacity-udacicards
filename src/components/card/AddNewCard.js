@@ -27,26 +27,22 @@ class AddNewCard extends PureComponent {
 
   submit = values => {
     const { deckId } = this.props.navigation.state.params;
-
-    this.setState(state => {
-      return {
-        ...state,
-        ...this.props.deck,
-        questions: [
-          ...this.props.deck['questions'],
-          values,
-        ]
-      }
-    }, () => {
-
-      // Update redux
-      this.props.addCardToDeck(values, deckId);
     
+    // Update redux
+    this.props.addCardToDeck(values, deckId);
+
+    this.setState(state => ({
+      ...state,
+      ...this.props.deck,
+      questions: [
+        ...this.props.deck['questions'],
+        values,
+      ]
+    }), () => {
       // Save to 'DB'
       submitCardToDeck(this.state, deckId);
-      
-      this.goBack();
     })
+    this.goBack();
   }
   render() {
     return (
@@ -62,8 +58,5 @@ class AddNewCard extends PureComponent {
 const mapStateToProps = ({ decks }, ownProps) => ({
   deck: decks[ownProps.navigation.state.params.deckId],
 })
-const mapDispatchToProps = (dispatch) => ({
-  addCardToDeck: (card, deck) => dispatch(addCardToDeck(card, deck)),
-})
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddNewCard);
+export default connect(mapStateToProps, { addCardToDeck })(AddNewCard);

@@ -26,6 +26,7 @@ class DeckList extends PureComponent {
   render() {
     const { navigation, decks } = this.props;
     const { loading } = this.state;
+    const length = Object.keys(decks).length;
     if (loading) {
       return <Text>Loading...</Text>
     }
@@ -34,24 +35,26 @@ class DeckList extends PureComponent {
       <View style={styles.container}>
         <Text>Deck List</Text>
         <ScrollView contentContainerStyle={styles.decks}>
-          {Object.keys(decks).map((deck, index) => {
-            const { title, questions } = decks[deck];
-            const length = questions.length;
-            return (
-                <View key={index} style={styles.deck}>
-                  <Text>{title}</Text>
-                  <TouchableOpacity
-                    onPress={() => navigation.navigate('DeckDetail', {
-                      deckId: title
-                      }
-                    )}>
-                    <Text>Detail</Text>
-                  </TouchableOpacity>
-                  <Text>{length} {length > 1 ? 'cards' : 'card'}</Text>
-                </View>
-              )
-            }
-          )}
+          {length > 0
+            ? Object.keys(decks).map((deck, index) => {
+                const { title, questions } = decks[deck];
+                const length = questions.length;
+                return (
+                    <View key={index} style={styles.deck}>
+                      <Text>{title}</Text>
+                      <TouchableOpacity
+                        onPress={() => navigation.navigate('DeckDetail', {
+                          deckId: title
+                          }
+                        )}>
+                        <Text>Detail</Text>
+                      </TouchableOpacity>
+                      <Text>{length} {length > 1 ? 'cards' : 'card'}</Text>
+                    </View>
+                  )
+              })
+            : <Text>There are no decks here.</Text>
+          }
         </ScrollView>
       </View>
     )
