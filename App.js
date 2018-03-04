@@ -8,6 +8,7 @@ import {
 import { Provider } from 'react-redux';
 import { store } from './src/store/configureStore';
 import { TabNavigator, StackNavigator } from 'react-navigation';
+import { setLocalNotification } from './src/utils/helpers';
 import DeckList from './src/components/deck/DeckList';
 import AddNewDeck from './src/components/deck/AddNewDeck';
 import DeckDetail from './src/components/deck/DeckDetail';
@@ -50,6 +51,9 @@ const MainNavigator = StackNavigator({
 })
 
 export default class App extends PureComponent {
+  componentDidMount() {
+    setLocalNotification();
+  }
   render() {
     return (
       <Provider store={store}>

@@ -1,5 +1,20 @@
 {
   "expo": {
-    "sdkVersion": "25.0.0"
+    "sdkVersion": "25.0.0",
+    "orientation": "portrait",
+    "name": "UdaciCards",
+    "description": "Quiz yourself every day!",
+    "slug": "udacicards",
+    "version": "1.0",
+    "icon": "https://tylermcginnis.com/udacifitness-512.png",
+    "notification": {
+      "icon": "https://tylermcginnis.com/udacifitness-45.png"
+    },
+    "ios": {
+     "bundleIdentifier": "org.udacicards.exp"
+    },
+    "android": {
+     "package": "org.udacicards.exp"
+    }
   }
 }

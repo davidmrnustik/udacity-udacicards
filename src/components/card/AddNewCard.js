@@ -9,22 +9,22 @@ import { submitCardToDeck } from '../../utils/api';
 import NewCardForm from './NewCardForm';
 
 class AddNewCard extends PureComponent {
+  static navigationOptions = {
+    title: 'Add new card',
+  }
   state = {
     title: '',
     questions: [],
   }
-
   componentDidMount() {
     this.setState(state => ({
       ...state,
       ...this.props.deck,
     }))
   }
-
   goBack = () => {
     this.props.navigation.goBack();
   }
-
   submit = values => {
     const { deckId } = this.props.navigation.state.params;
     

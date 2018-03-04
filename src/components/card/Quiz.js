@@ -5,13 +5,14 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
+  Alert,
 } from 'react-native';
+import { NavigationActions } from 'react-navigation';
+import { setLocalNotification } from '../../utils/helpers';
 
 class Quiz extends PureComponent {
-  static navigationOptions = ({ navigation }) => {
-    return {
-      title: 'Quiz',
-    }
+  static navigationOptions = {
+    title: 'Quiz',
   }
   state = {
     questionIndex: 0,
@@ -20,23 +21,25 @@ class Quiz extends PureComponent {
     voted: false,
   }
   onPressCorrect = () => {
-    if (this.state.voted) return alert('You have already voted!');
+    if (this.state.voted) return Alert.alert('You have already voted!');
     this.setState(state => ({
       score: state.score + 1,
       voted: true,
     }))
   }
   onPressIncorrect = () => {
-    if (this.state.voted) return alert('You have already voted!');
+    if (this.state.voted) return Alert.alert('You have already voted!');
     this.setState({ voted: true });
   }
   onPressAnswer = () => {
+    const last = this.props.questions.length - 1;
+    if (this.state.questionIndex === last) setLocalNotification();
     this.setState(state => ({
       status: 'answer',
     }));
   }
   onPressQuestion = () => {
-    if (!this.state.voted) return alert('You have to vote!');
+    if (!this.state.voted) return Alert.alert('You have to vote!');
     const length = this.props.questions.length - 1;
     this.setState(state => ({
       status: 'question',
@@ -45,6 +48,24 @@ class Quiz extends PureComponent {
         ? state.questionIndex + 1
         : state.questionIndex
     }));
+  }
+  onPressRestartQuiz = () => {
+    const { navigation } = this.props;
+    const { deckId } = navigation.state.params;
+    navigation.dispatch(NavigationActions.reset({
+      index: 2,
+      actions: [
+        NavigationActions.navigate({ routeName: 'Home' }),
+        NavigationActions.navigate({
+          routeName: 'DeckDetail',
+          params: { deckId }
+        }),
+        NavigationActions.navigate({
+          routeName: 'Quiz',
+          params: { deckId }
+        }),
+      ]
+    }))
   }
   render() {
     const { navigation, questions } = this.props;
@@ -55,7 +76,7 @@ class Quiz extends PureComponent {
     const buttons = (onPress, text) => (
       <TouchableOpacity
         onPress={status === 'question'
-          ? () => alert('You have to answer first.')
+          ? () => Alert.alert('You have to answer first.')
           : onPress}
       >
         <Text>{text}</Text>
@@ -65,7 +86,6 @@ class Quiz extends PureComponent {
     return (
       <View style={styles.container}>
         <Text>{questionIndex + 1} / {length}</Text>
-        <Text>Score: {score}</Text>
         <View style={styles.title}>
           <Text>{title}</Text>
           {status === 'question'
@@ -90,7 +110,10 @@ class Quiz extends PureComponent {
               <Text>There are no more questions in deck. </Text>
               <Text>Yout score is: {score}</Text>
               <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Text>Go back</Text>
+                <Text>Back to Deck</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => this.onPressRestartQuiz()}>
+                <Text>Restart Quiz</Text>
               </TouchableOpacity>
             </View>
           )}
@@ -120,11 +143,10 @@ const styles = StyleSheet.create({
   }
 })
 
-function mapStateToProps({ decks }, ownProps) {
-  const deck = Object.keys(decks)
-    .filter(deck => decks[deck].title === ownProps.navigation.state.params.deckId)[0];
+const mapStateToProps = ({ decks }, ownProps) => {
+  const { deckId } = ownProps.navigation.state.params;
   return {
-    questions: decks[deck].questions,
+    questions: decks[deckId].questions,
   }
 }
 
