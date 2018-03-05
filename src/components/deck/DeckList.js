@@ -10,11 +10,14 @@ import {
 import { receiveDecks } from '../../actions';
 import { getDecks } from '../../utils/api';
 
+/**
+  * DeckList renders list of decks, it's consider as a home page.
+  * It receives decks props and dispatch receiveDecks action.
+  */
 class DeckList extends PureComponent {
   state = {
     loading: false,
   }
-
   componentDidMount() {
     this.setState({ saving: true });
     getDecks()
@@ -38,7 +41,7 @@ class DeckList extends PureComponent {
           {length > 0
             ? Object.keys(decks).map((deck, index) => {
                 const { title, questions } = decks[deck];
-                const length = questions.length;
+                const questionLength = questions.length;
                 return (
                     <View key={index} style={styles.deck}>
                       <Text>{title}</Text>
@@ -49,7 +52,7 @@ class DeckList extends PureComponent {
                         )}>
                         <Text>Detail</Text>
                       </TouchableOpacity>
-                      <Text>{length} {length > 1 ? 'cards' : 'card'}</Text>
+                      <Text>{questionLength} {questionLength > 1 ? 'cards' : 'card'}</Text>
                     </View>
                   )
               })

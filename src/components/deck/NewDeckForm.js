@@ -9,6 +9,11 @@ import {
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 
+/**
+  * Frontend validation functionality when adding a new deck.
+  * It also validates if deck exists in store.
+  * https://redux-form.com/7.2.0/examples/
+  */
 const validate = (values, { decks }) => {
   const { title } = values;
   const errors = {};
@@ -26,6 +31,11 @@ const validate = (values, { decks }) => {
   return errors;
 }
 
+/**
+  * renderField handles errors, warnings and renders 'form' fields
+  * of types TextInput.
+  * https://redux-form.com/7.2.0/examples/
+  */
 const renderField = ({
   input: { onChange, ...restInput },
   meta: {touched, error, warning }
@@ -43,6 +53,11 @@ const renderField = ({
   )
 }
 
+/**
+  * NewDeckForm handles form for create a new deck.
+  * It uses redux-form to handle form data and validate them.
+  * https://redux-form.com/7.2.0/examples/
+  */
 let NewDeckForm = ({ onSubmit, handleSubmit }) => {
   const submit = values => {
     onSubmit(values);

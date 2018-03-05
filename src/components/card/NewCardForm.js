@@ -8,6 +8,10 @@ import {
 } from 'react-native';
 import { Field, reduxForm } from 'redux-form';
 
+/**
+  * Frontend validation functionality when adding a new card.
+  * https://redux-form.com/7.2.0/examples/
+  */
 const validate = values => {
   const { question, answer } = values;
   const errors = {};
@@ -26,6 +30,11 @@ const validate = values => {
   return errors;
 }
 
+/**
+  * renderField handles errors, warnings and renders 'form' fields
+  * of types TextInput.
+  * https://redux-form.com/7.2.0/examples/
+  */
 const renderField = ({
   input: { onChange, ...restInput },
   meta: {touched, error, warning }
@@ -43,6 +52,12 @@ const renderField = ({
   )
 }
 
+/**
+  * NewCardForm handles form for create a new card
+  * with question and answer.
+  * It uses redux-form to handle form data and validate them.
+  * https://redux-form.com/7.2.0/examples/
+  */
 let NewCardForm = ({ onSubmit, handleSubmit }) => {
   const submit = values => {
     onSubmit(values);

@@ -8,6 +8,10 @@ import { addCardToDeck } from '../../actions';
 import { submitCardToDeck } from '../../utils/api';
 import NewCardForm from './NewCardForm';
 
+/**
+  * AddNewCard receives data from NewCardForm and handles storage logic.
+  * It receives decks props and dispatch addCardToDeck action.
+  */
 class AddNewCard extends PureComponent {
   static navigationOptions = {
     title: 'Add new card',

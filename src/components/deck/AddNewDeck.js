@@ -9,7 +9,11 @@ import NewDeckForm from './NewDeckForm';
 import { submitDeck } from '../../utils/api';
 import { addDeck } from '../../actions';
 
-class AddNewDeck extends PureComponent {
+/**
+  * AddNewDeck receives data from NewDeckForm and handles storage logic.
+  * It receives decks props and dispatch addDeck action.
+  */
+ class AddNewDeck extends PureComponent {
   state = {
     deck: {
       title: '',

@@ -7,6 +7,10 @@ import {
   StyleSheet,
 } from 'react-native';
 
+/**
+  * DeckDetail renders deck detail.
+  * It receives decks props and deckId parsed from navigation params.
+  */
 class DeckDetail extends PureComponent {
   static navigationOptions = ({ navigation }) => {
     const { deckId } = navigation.state.params;
@@ -23,7 +27,7 @@ class DeckDetail extends PureComponent {
       <View style={styles.container}>
         <View style={styles.title}>
           <Text>{title}</Text>
-          <Text>{length} {length > 0 ? 'cards' : 'card'}</Text>
+          <Text>{length} {length > 1 ? 'cards' : 'card'}</Text>
         </View>
         <View style={styles.buttons}>
           <TouchableOpacity

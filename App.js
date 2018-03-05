@@ -50,6 +50,12 @@ const MainNavigator = StackNavigator({
   },
 })
 
+/**
+  * App handles MainNavigator that contains Stack and Tab Navigator.
+  * Stack Navigator handles Tab Navigator Tabs, Deck Detail, Quiz
+  * and Add New Card.
+  * Tab Navigator handles Deck List and Add New Deck.
+  */
 export default class App extends PureComponent {
   componentDidMount() {
     setLocalNotification();

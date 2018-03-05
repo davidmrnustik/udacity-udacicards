@@ -13,6 +13,10 @@ import {
   clearLocalNotification,
 } from '../../utils/helpers';
 
+/**
+  * Quiz component contains functionality modify, remove and vote.
+  * It receives decks props and deckId that is parsed from navigation params.
+  */
 class Quiz extends PureComponent {
   static navigationOptions = {
     title: 'Quiz',
