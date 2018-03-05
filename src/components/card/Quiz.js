@@ -8,7 +8,10 @@ import {
   Alert,
 } from 'react-native';
 import { NavigationActions } from 'react-navigation';
-import { setLocalNotification } from '../../utils/helpers';
+import {
+  setLocalNotification,
+  clearLocalNotification,
+} from '../../utils/helpers';
 
 class Quiz extends PureComponent {
   static navigationOptions = {
@@ -31,9 +34,15 @@ class Quiz extends PureComponent {
     if (this.state.voted) return Alert.alert('You have already voted!');
     this.setState({ voted: true });
   }
+  setNotifications() {
+    clearLocalNotification()
+      .then(setLocalNotification)
+  }
   onPressAnswer = () => {
     const last = this.props.questions.length - 1;
-    if (this.state.questionIndex === last) setLocalNotification();
+    if (this.state.questionIndex === last) {
+      this.setNotifications();
+    };
     this.setState(state => ({
       status: 'answer',
     }));

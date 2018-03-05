@@ -48,7 +48,6 @@ class AddNewCard extends PureComponent {
     return (
       <View>
         <Text>Add new card</Text>
-        <Text>Question:</Text>
         <NewCardForm onSubmit={this.submit} />
       </View>
     )
