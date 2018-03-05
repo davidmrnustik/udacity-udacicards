@@ -8,6 +8,7 @@ import {
   Alert,
 } from 'react-native';
 import { NavigationActions } from 'react-navigation';
+import PropTypes from 'prop-types';
 import {
   setLocalNotification,
   clearLocalNotification,
@@ -20,6 +21,10 @@ import {
 class Quiz extends PureComponent {
   static navigationOptions = {
     title: 'Quiz',
+  }
+  static propTypes = {
+    questions: PropTypes.array,
+    navigation: PropTypes.object.isRequired
   }
   state = {
     questionIndex: 0,

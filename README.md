@@ -1,10 +1,10 @@
-# UdaciCard Project
+# UdaciCards Project
 
 This is final assessment project for Udacity's React Native course.
 
 ## App
 
-Udacity app allows users to study collections of flashcards. The app will allow users to create different categories of flashcards called "decks", add flashcards to those decks, then take quizzes on those decks. App has implemented notification functionality that reminds users to study if they haven't already for that day.
+This app allows users to study collections of flashcards. The app will allow users to create different categories of flashcards called "decks", add flashcards to those decks, then take quizzes on those decks. App has implemented notification functionality that reminds users to study if they haven't already for that day.
 
 ## Install / Run
 

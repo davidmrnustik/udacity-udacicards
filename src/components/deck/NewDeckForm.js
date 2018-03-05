@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
+import PropTypes from 'prop-types';
 
 /**
   * Frontend validation functionality when adding a new deck.
@@ -71,6 +72,11 @@ let NewDeckForm = ({ onSubmit, handleSubmit }) => {
       </TouchableOpacity>
     </View>
   )
+}
+
+NewDeckForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
 }
 
 const styles = StyleSheet.create({

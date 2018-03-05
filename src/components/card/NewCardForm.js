@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { Field, reduxForm } from 'redux-form';
+import PropTypes from 'prop-types';
 
 /**
   * Frontend validation functionality when adding a new card.
@@ -73,6 +74,11 @@ let NewCardForm = ({ onSubmit, handleSubmit }) => {
       </TouchableOpacity>
     </View>
   )
+}
+
+NewCardForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
 }
 
 const styles = StyleSheet.create({

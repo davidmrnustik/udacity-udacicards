@@ -4,6 +4,7 @@ import {
   View,
 } from 'react-native';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { addCardToDeck } from '../../actions';
 import { submitCardToDeck } from '../../utils/api';
 import NewCardForm from './NewCardForm';
@@ -15,6 +16,10 @@ import NewCardForm from './NewCardForm';
 class AddNewCard extends PureComponent {
   static navigationOptions = {
     title: 'Add new card',
+  }
+  static propTypes = {
+    deck: PropTypes.object.isRequired,
+    navigation: PropTypes.object.isRequired
   }
   state = {
     title: '',

@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
+import PropTypes from 'prop-types';
 
 /**
   * DeckDetail renders deck detail.
@@ -18,6 +19,10 @@ class DeckDetail extends PureComponent {
     return {
       title: deckId,
     }
+  }
+  static propTypes = {
+    deck: PropTypes.object.isRequired,
+    navigation: PropTypes.object.isRequired
   }
   render() {
     const { navigation, deck } = this.props;

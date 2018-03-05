@@ -8,23 +8,34 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { receiveDecks } from '../../actions';
+import PropTypes from 'prop-types';
 import { getDecks } from '../../utils/api';
+import Deck from './Deck';
 
 /**
   * DeckList renders list of decks, it's consider as a home page.
   * It receives decks props and dispatch receiveDecks action.
   */
 class DeckList extends PureComponent {
+  static propTypes = {
+    decks: PropTypes.object,
+    navigation: PropTypes.object.isRequired
+  }
   state = {
     loading: false,
   }
   componentDidMount() {
-    this.setState({ saving: true });
+    this.setState({ loading: true });
     getDecks()
       .then(decks => this.props.receiveDecks(decks))
       .then(() => this.setState(() =>({
         loading: false,
       })))
+  }
+  onPressDeck(title) {
+    this.props.navigation.navigate('DeckDetail', {
+      deckId: title
+    })
   }
   render() {
     const { navigation, decks } = this.props;
@@ -44,15 +55,11 @@ class DeckList extends PureComponent {
                 const questionLength = questions.length;
                 return (
                     <View key={index} style={styles.deck}>
-                      <Text>{title}</Text>
-                      <TouchableOpacity
-                        onPress={() => navigation.navigate('DeckDetail', {
-                          deckId: title
-                          }
-                        )}>
-                        <Text>Detail</Text>
-                      </TouchableOpacity>
-                      <Text>{questionLength} {questionLength > 1 ? 'cards' : 'card'}</Text>
+                      <Deck
+                        title={title}
+                        onPress={() => this.onPressDeck(title)}
+                        questionLength={questionLength}
+                      />
                     </View>
                   )
               })

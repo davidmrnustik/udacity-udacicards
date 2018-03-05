@@ -5,6 +5,7 @@ import {
   View,
 } from 'react-native';
 import { NavigationActions } from 'react-navigation';
+import PropTypes from 'prop-types';
 import NewDeckForm from './NewDeckForm';
 import { submitDeck } from '../../utils/api';
 import { addDeck } from '../../actions';
@@ -14,6 +15,10 @@ import { addDeck } from '../../actions';
   * It receives decks props and dispatch addDeck action.
   */
  class AddNewDeck extends PureComponent {
+  static propTypes = {
+    decks: PropTypes.object,
+    navigation: PropTypes.object.isRequired
+  }
   state = {
     deck: {
       title: '',
