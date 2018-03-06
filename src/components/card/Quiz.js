@@ -4,7 +4,6 @@ import {
   View,
   Text,
   TouchableOpacity,
-  StyleSheet,
   Alert,
 } from 'react-native';
 import { NavigationActions } from 'react-navigation';
@@ -13,9 +12,11 @@ import {
   setLocalNotification,
   clearLocalNotification,
 } from '../../utils/helpers';
+import Card from './Card';
 
 /**
-  * Quiz component contains functionality modify, remove and vote.
+  * Quiz component contains functionality to question, answer and vote.
+  * It also calculates users score.
   * It receives decks props and deckId that is parsed from navigation params.
   */
 class Quiz extends PureComponent {
@@ -91,75 +92,28 @@ class Quiz extends PureComponent {
     const length = questions.length;
     const title = questions[questionIndex][status];
     const last = questionIndex === length - 1;
-    const buttons = (onPress, text) => (
-      <TouchableOpacity
-        onPress={status === 'question'
-          ? () => Alert.alert('You have to answer first.')
-          : onPress}
-      >
-        <Text>{text}</Text>
-      </TouchableOpacity>
-    )
 
     return (
-      <View style={styles.container}>
-        <Text>{questionIndex + 1} / {length}</Text>
-        <View style={styles.title}>
-          <Text>{title}</Text>
-          {status === 'question'
-            ? (
-              <TouchableOpacity onPress={this.onPressAnswer}>
-                <Text>Answer</Text>
-              </TouchableOpacity>
-            )
-            : !last
-                ? (
-                  <TouchableOpacity onPress={this.onPressQuestion}>
-                    <Text>Question</Text>
-                  </TouchableOpacity>
-                )
-                : null
-          }
-        </View>
-
-        <View style={styles.buttons}>
-          {last && voted && (
-            <View style={{ alignItems: 'center' }}>
-              <Text>There are no more questions in deck. </Text>
-              <Text>Yout score is: {score}</Text>
-              <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Text>Back to Deck</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => this.onPressRestartQuiz()}>
-                <Text>Restart Quiz</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-          {buttons(this.onPressCorrect, 'Correct')}
-          {buttons(this.onPressIncorrect, 'Incorrect')}
-        </View>
-        
-      </View>
+      <Card
+        questionIndex={questionIndex}
+        length={length}
+        title={title}
+        status={status}
+        last={last}
+        voted={voted}
+        score={score}
+        onPressCorrect={this.onPressCorrect}
+        onPressIncorrect={this.onPressIncorrect}
+        onPressQuestion={this.onPressQuestion}
+        onPressAnswer={this.onPressAnswer}
+        onPressRestartQuiz={this.onPressRestartQuiz}
+        onPressGoBack={() => navigation.goBack()}
+        voted={voted}
+        score={score}
+      />
     )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-between',
-  },
-  title: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttons: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  }
-})
 
 const mapStateToProps = ({ decks }, ownProps) => {
   const { deckId } = ownProps.navigation.state.params;
