@@ -6,6 +6,10 @@ This is final assessment project for Udacity's React Native course.
 
 This app allows users to study collections of flashcards. The app will allow users to create different categories of flashcards called "decks", add flashcards to those decks, then take quizzes on those decks. App has implemented notification functionality that reminds users to study if they haven't already for that day.
 
+## Tested platforms ##
+
+App has been tested on iOS (iPhone 6s 11.2) and Android (Nexus 6 API 23, Android 6.0) emulators and on real device iPhone SE in Expo app.
+
 ## Install / Run
 
 This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app).

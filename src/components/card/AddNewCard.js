@@ -2,7 +2,8 @@ import React, { PureComponent } from 'react';
 import {
   Text,
   View,
-  StyleSheet
+  StyleSheet,
+  KeyboardAvoidingView
 } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -57,7 +58,12 @@ class AddNewCard extends PureComponent {
   render() {
     return (
       <View style={styles.container}>
-        <NewCardForm onSubmit={this.submit} />
+        <KeyboardAvoidingView
+          behavior={'padding'}
+          keyboardVerticalOffset={130}
+        >
+          <NewCardForm onSubmit={this.submit} />
+        </KeyboardAvoidingView>
       </View>
     )
   }

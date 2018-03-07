@@ -28,7 +28,7 @@ CardButton.propTypes = {
   onPress: PropTypes.func.isRequired,
   text: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
-  styleButton: PropTypes.object,
+  styleButton: PropTypes.any,
   styleButtonText: PropTypes.object,
 };
 

@@ -4,6 +4,8 @@ import {
   Text,
   View,
   StyleSheet,
+  KeyboardAvoidingView,
+  Platform
 } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import PropTypes from 'prop-types';
@@ -74,8 +76,13 @@ import { commonColor } from '../../utils/variables';
 
     return (
       <View style={styles.container}>
+        <KeyboardAvoidingView
+          behavior={'padding'}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 50 : 150}
+        >
         <Text style={styles.title}>What is your title of your new deck?</Text>
         <NewDeckForm onSubmit={this.submit} />
+        </KeyboardAvoidingView>
       </View>
     )
   }

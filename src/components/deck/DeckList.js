@@ -6,6 +6,7 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
+  Platform
 } from 'react-native';
 import { receiveDecks } from '../../actions';
 import PropTypes from 'prop-types';
@@ -48,12 +49,13 @@ class DeckList extends PureComponent {
 
     return (
       <View style={styles.container}>
-        <ScrollView contentContainerStyle={styles.decks}>
           {length > 0
-            ? Object.keys(decks).map((deck, index) => {
-                const { title, questions } = decks[deck];
-                const questionLength = questions.length;
-                return (
+            ? (
+                <ScrollView>
+                  {Object.keys(decks).map((deck, index) => {
+                  const { title, questions } = decks[deck];
+                  const questionLength = questions.length;
+                  return (
                     <View key={index} style={styles.deck}>
                       <Deck
                         title={title}
@@ -61,11 +63,15 @@ class DeckList extends PureComponent {
                         questionLength={questionLength}
                       />
                     </View>
-                  )
-              })
-            : <Text>There are no decks here.</Text>
+                  )})}
+                </ScrollView>
+              )
+            : (
+                <View style={styles.noData}>
+                  <Text style={styles.noDataText}>There are no decks here.</Text>
+                </View>
+              )
           }
-        </ScrollView>
       </View>
     )
   }
@@ -74,11 +80,16 @@ class DeckList extends PureComponent {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 20,
+    paddingTop: Platform.OS === 'ios' ? 20 : 0,
     backgroundColor: commonColor.backgroundColor
   },
-  decks: {
-    justifyContent: 'space-between',
+  noData: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  noDataText: {
+    color: commonColor.brown,
   },
   deck: {
     flex: 1,
@@ -87,6 +98,7 @@ const styles = StyleSheet.create({
     minHeight: 120,
     alignItems: 'center',
     justifyContent: 'center',
+    paddingHorizontal: 20,
   }
 });
 

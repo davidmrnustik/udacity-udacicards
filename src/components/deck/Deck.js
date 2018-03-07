@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignSelf: 'stretch',
+    paddingVertical: 20,
   },
   title: {
     color: commonColor.turquoise,
