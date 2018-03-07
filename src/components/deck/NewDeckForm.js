@@ -3,12 +3,13 @@ import {
   Text,
   View,
   TextInput,
-  StyleSheet,
   TouchableOpacity,
+  StyleSheet
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
+import { commonStyle } from '../../utils/variables';
 
 /**
   * Frontend validation functionality when adding a new deck.
@@ -44,12 +45,12 @@ const renderField = ({
   return (
     <View>
       <TextInput
-        style={styles.textInput}
+        style={[commonStyle.textInput, styles.textInput]}
         onChangeText={onChange}
         {...restInput}
         />
       {touched &&
-        (error && <Text style={styles.error}>{error}</Text>)}
+        (error && <Text style={commonStyle.error}>{error}</Text>)}
     </View>
   )
 }
@@ -64,11 +65,13 @@ let NewDeckForm = ({ onSubmit, handleSubmit }) => {
     onSubmit(values);
   }
   return (
-    <View>
-      <Text>Title:</Text>
+    <View style={styles.container}>
       <Field name='title' component={renderField} />
-      <TouchableOpacity onPress={handleSubmit(submit)}>
-        <Text>Send</Text>
+      <TouchableOpacity
+        onPress={handleSubmit(submit)}
+        style={[commonStyle.button, styles.button]}  
+      >
+        <Text style={[commonStyle.buttonText, commonStyle.buttonText]}>Send</Text>
       </TouchableOpacity>
     </View>
   )
@@ -79,16 +82,18 @@ NewDeckForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
 }
 
-const styles = StyleSheet.create({
+const styles = {
+  container: {
+    justifyContent: 'center',
+  },
+  button: {
+    marginTop: 20,
+    alignSelf: 'center'
+  },
   textInput: {
-    padding: 8,
-    borderWidth: 1,
-    borderColor: 'gray',
-  },
-  error: {
-    color: 'red',
-  },
-})
+    alignSelf: 'center'
+  }
+}
 
 NewDeckForm = reduxForm({
   form: 'addDeckCard',

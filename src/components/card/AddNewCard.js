@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import {
   Text,
   View,
+  StyleSheet
 } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -55,13 +56,19 @@ class AddNewCard extends PureComponent {
   }
   render() {
     return (
-      <View>
-        <Text>Add new card</Text>
+      <View style={styles.container}>
         <NewCardForm onSubmit={this.submit} />
       </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center'
+  }
+});
 
 const mapStateToProps = ({ decks }, ownProps) => ({
   deck: decks[ownProps.navigation.state.params.deckId],

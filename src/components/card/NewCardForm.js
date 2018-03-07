@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
+import { commonStyle } from '../../utils/variables';
 
 /**
   * Frontend validation functionality when adding a new card.
@@ -43,12 +44,12 @@ const renderField = ({
   return (
     <View>
       <TextInput
-        style={styles.textInput}
+        style={[commonStyle.textInput, styles.textInput]}
         onChangeText={onChange}
         {...restInput}
         />
       {touched &&
-        (error && <Text style={styles.error}>{error}</Text>)}
+        (error && <Text style={commonStyle.error}>{error}</Text>)}
     </View>
   )
 }
@@ -64,13 +65,20 @@ let NewCardForm = ({ onSubmit, handleSubmit }) => {
     onSubmit(values);
   }
   return (
-    <View>
-      <Text>Question:</Text>
-      <Field name='question' component={renderField} />
-      <Text>Answer:</Text>
-      <Field name='answer' component={renderField} />
-      <TouchableOpacity onPress={handleSubmit(submit)}>
-        <Text>Send</Text>
+    <View style={styles.container}>
+      <View style={styles.question}>
+        <Text style={styles.label}>Question:</Text>
+        <Field name='question' component={renderField} />
+      </View>
+      <View>
+        <Text style={styles.label}>Answer:</Text>
+        <Field name='answer' component={renderField} />
+      </View>
+      <TouchableOpacity
+        onPress={handleSubmit(submit)}
+        style={[commonStyle.button, styles.button]}
+      >
+        <Text style={[commonStyle.buttonText, styles.buttonText]}>Send</Text>
       </TouchableOpacity>
     </View>
   )
@@ -82,14 +90,24 @@ NewCardForm.propTypes = {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'center',
+  },
+  button: {
+    marginTop: 20,
+    alignSelf: 'center'
+  },
   textInput: {
-    padding: 8,
-    borderWidth: 1,
-    borderColor: 'gray',
+    alignSelf: 'center',
+    width: '80%',
   },
-  error: {
-    color: 'red',
+  label: {
+    textAlign: 'center',
+    marginBottom: 5,
   },
+  question: {
+    marginBottom: 20,
+  }
 })
 
 NewCardForm = reduxForm({

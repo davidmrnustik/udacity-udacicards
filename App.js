@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { FontAwesome } from '@expo/vector-icons';
+import { MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 import {
   StyleSheet,
   Text,
@@ -14,21 +14,29 @@ import AddNewDeck from './src/components/deck/AddNewDeck';
 import DeckDetail from './src/components/deck/DeckDetail';
 import Quiz from './src/components/card/Quiz';
 import AddNewCard from './src/components/card/AddNewCard';
+import { commonColor } from './src/utils/variables';
 
 const Tabs = TabNavigator({
   DeckList: {
     screen: DeckList,
     navigationOptions: {
       tabBarLabel: 'Decks',
-      tabBarIcon: () => <FontAwesome name='book' size={30} color="black" />
+      tabBarIcon: () => <MaterialCommunityIcons name='cards-outline' size={30} color={commonColor.brown} />,
+      
     },
   },
   AddNewDeck: {
     screen: AddNewDeck,
     navigationOptions: {
       tabBarLabel: 'New Deck',
-      tabBarIcon: () => <FontAwesome name='plus-square' size={30} color="black" />
+      tabBarIcon: () => <Feather name='plus-square' size={25} color={commonColor.brown} />
     },
+  }
+},{
+  tabBarOptions: {
+    activeTintColor: commonColor.brown,
+    inactiveTintColor: commonColor.brownLight,
+    activeBackgroundColor: commonColor.grey,
   }
 })
 
@@ -74,7 +82,5 @@ export default class App extends PureComponent {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 20,
-    backgroundColor: '#fff',
   },
 });

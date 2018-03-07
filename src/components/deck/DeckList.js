@@ -11,6 +11,7 @@ import { receiveDecks } from '../../actions';
 import PropTypes from 'prop-types';
 import { getDecks } from '../../utils/api';
 import Deck from './Deck';
+import { commonColor } from '../../utils/variables';
 
 /**
   * DeckList renders list of decks, it's consider as a home page.
@@ -47,7 +48,6 @@ class DeckList extends PureComponent {
 
     return (
       <View style={styles.container}>
-        <Text>Deck List</Text>
         <ScrollView contentContainerStyle={styles.decks}>
           {length > 0
             ? Object.keys(decks).map((deck, index) => {
@@ -74,13 +74,17 @@ class DeckList extends PureComponent {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: 20,
+    backgroundColor: commonColor.backgroundColor
   },
   decks: {
     justifyContent: 'space-between',
   },
   deck: {
     flex: 1,
-    minHeight: 200,
+    borderBottomWidth: 1,
+    borderColor: commonColor.brownVeryLight,
+    minHeight: 120,
     alignItems: 'center',
     justifyContent: 'center',
   }

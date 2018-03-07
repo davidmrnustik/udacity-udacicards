@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import CardButton from './CardButton';
+import { commonColor, commonStyle } from '../../utils/variables';
 
 /**
   * Stateless component Card renders card detail with props from Quiz.
@@ -28,48 +29,65 @@ const Card = ({
   score,
 }) => (
   <View style={styles.container}>
-    <Text>{questionIndex + 1} / {length}</Text>
-    <View style={styles.title}>
-      <Text>{title}</Text>
+    <Text style={styles.pager}>{questionIndex + 1} / {length}</Text>
+    <View style={styles.titleContainer}>
+      <Text style={styles.title}>{title}</Text>
       {status === 'question'
         ? (
           <TouchableOpacity onPress={onPressAnswer}>
-            <Text>Answer</Text>
+            <Text style={commonStyle.link}>Answer</Text>
           </TouchableOpacity>
         )
         : !last
             ? (
               <TouchableOpacity onPress={onPressQuestion}>
-                <Text>Question</Text>
+                <Text style={commonStyle.link}>Question</Text>
               </TouchableOpacity>
             )
-            : null
+            : <Text>There are no more questions in deck.</Text>
       }
     </View>
 
     <View style={styles.buttons}>
-      {last && voted && (
-        <View style={{ alignItems: 'center' }}>
-          <Text>There are no more questions in deck. </Text>
-          <Text>Yout score is: {score}</Text>
-          <TouchableOpacity onPress={onPressGoBack}>
-            <Text>Back to Deck</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={onPressRestartQuiz}>
-            <Text>Restart Quiz</Text>
-          </TouchableOpacity>
-        </View>
-      )}
-      <CardButton
-        text='Correct'
-        status={status}
-        onPress={onPressCorrect}
-      />
-      <CardButton
-        text='Incorrect'
-        status={status}
-        onPress={onPressIncorrect}
-      />
+      {last && voted
+        ? (
+            <View style={styles.finalScore}>
+              <Text style={styles.score}>Your score is: {score}</Text>
+              <View style={styles.finalButtons}>
+                <TouchableOpacity
+                  onPress={onPressGoBack}
+                  style={[commonStyle.buttonInverse, styles.button]}
+                >
+                  <Text style={commonStyle.buttonTextInverse}>Back to Deck</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={onPressRestartQuiz}
+                  style={[commonStyle.buttonInverse, styles.button]}  
+                >
+                <Text style={commonStyle.buttonTextInverse}>Restart Quiz</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          )
+        : (
+            <View>
+              <CardButton
+                text='Correct'
+                status={status}
+                onPress={onPressCorrect}
+                styleButton={[commonStyle.buttonSuccess, styles.buttonCorrect]}
+                styleButtonText={commonStyle.buttonText}
+              />
+              <CardButton
+                text='Incorrect'
+                status={status}
+                onPress={onPressIncorrect}
+                styleButton={commonStyle.buttonWarning}
+                styleButtonText={commonStyle.buttonText}
+              />
+            </View>
+          )
+        }
     </View>
     
   </View>
@@ -80,15 +98,43 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
   },
-  title: {
+  titleContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  title: {
+    textAlign: 'center',
+    fontSize: 25,
+    marginBottom: 30,
+    paddingHorizontal: 20,
+  },
+  pager: {
+    textAlign: 'center',
+    marginTop: 10,
+    color: commonColor.brown
   },
   buttons: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  buttonCorrect: {
+    marginBottom: 20
+  },
+  score: {
+    marginVertical: 20,
+    fontSize: 20,
+    color: commonColor.turquoise,
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
+  finalButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+  },
+  button: {
+    marginHorizontal: 10
   }
 })
 

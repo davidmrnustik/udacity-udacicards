@@ -7,6 +7,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import PropTypes from 'prop-types';
+import { commonColor, commonStyle } from '../../utils/variables';
 
 /**
   * DeckDetail renders deck detail.
@@ -30,25 +31,27 @@ class DeckDetail extends PureComponent {
     const { title } = deck;
     return (
       <View style={styles.container}>
-        <View style={styles.title}>
-          <Text>{title}</Text>
-          <Text>{length} {length > 1 ? 'cards' : 'card'}</Text>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.cards}>{length} {length > 1 ? 'cards' : 'card'}</Text>
         </View>
         <View style={styles.buttons}>
           <TouchableOpacity
             onPress={() => navigation.navigate('AddNewCard', {
               deckId: title,
             })}
+            style={[commonStyle.buttonInverse, styles.addCard]}
           >
-            <Text>Add a card</Text>
+            <Text style={commonStyle.buttonTextInverse}>Add a card</Text>
           </TouchableOpacity>
           {length > 0 && (
             <TouchableOpacity
               onPress={() => navigation.navigate('Quiz', {
                 deckId: title,
               })}
+              style={commonStyle.button}
             >
-              <Text>Start Quiz</Text>
+              <Text style={commonStyle.buttonText}>Start Quiz</Text>
             </TouchableOpacity>
           )}
         </View>
@@ -62,15 +65,28 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
   },
-  title: {
+  titleContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  title: {
+    fontSize: 30,
+    paddingHorizontal: 10,
+    marginBottom: 5,
+    textAlign: 'center',
+    color: commonColor.turquoise
   },
   buttons: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  addCard: {
+    marginBottom: 20,
+  },
+  cards: {
+    color: commonColor.brown
   }
 })
 

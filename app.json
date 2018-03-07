@@ -6,9 +6,9 @@
     "description": "Quiz yourself every day!",
     "slug": "udacicards",
     "version": "1.0",
-    "icon": "https://tylermcginnis.com/udacifitness-512.png",
+    "icon": "https://raw.githubusercontent.com/davidmrnustik/udacity-udacicards/master/assets/udacicards-512.png",
     "notification": {
-      "icon": "https://tylermcginnis.com/udacifitness-45.png"
+      "icon": "https://raw.githubusercontent.com/davidmrnustik/udacity-udacicards/master/assets/udacicards-45.png"
     },
     "ios": {
      "bundleIdentifier": "org.udacicards.exp"
