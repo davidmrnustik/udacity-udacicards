@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import {
   Text,
@@ -6,9 +8,16 @@ import {
   StyleSheet,
   TouchableHighlight,
 } from 'react-native';
-import PropTypes from 'prop-types';
 import { withNavigation } from 'react-navigation';
+import type { NavigationType } from '../../utils/types';
 import { commonColor } from '../../utils/variables';
+
+type PropsType = {
+  title: ?string,
+  questionLength: ?number,
+  onPress: () => void,
+  navigation: NavigationType,
+}
 
 /**
   * Deck stateless component renders deck on deck list page.
@@ -26,13 +35,6 @@ const Deck = ({ title, questionLength, navigation, onPress }) => {
     </TouchableHighlight>
   )
 }
-
-Deck.propTypes = {
-  title: PropTypes.string,
-  questionLength: PropTypes.number,
-  onPress: PropTypes.func,
-  navigation: PropTypes.object.isRequired
-};
 
 const styles = StyleSheet.create({
   container: {

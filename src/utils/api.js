@@ -1,4 +1,7 @@
+// @flow
+
 import { AsyncStorage } from 'react-native';
+import type { CardType, DeckType, DecksType } from '../utils/types';
 
 export const UDACICARDS_STORAGE_KEY = 'UdaciCards:decks';
 
@@ -15,12 +18,12 @@ export function getDecks () {
     })
 }
 
-export function submitCardToDeck (card, deck) {
+export function submitCardToDeck (card: DeckType, deck: string): DeckType {
   return AsyncStorage.mergeItem(UDACICARDS_STORAGE_KEY, JSON.stringify({
     [deck]: card,
   }));
 }
 
-export function submitDeck (decks) {
+export function submitDeck (decks: DecksType) {
   return AsyncStorage.mergeItem(UDACICARDS_STORAGE_KEY, JSON.stringify(decks));
 }

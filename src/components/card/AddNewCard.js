@@ -1,3 +1,5 @@
+// @flow
+
 import React, { PureComponent } from 'react';
 import {
   Text,
@@ -6,22 +8,29 @@ import {
   KeyboardAvoidingView
 } from 'react-native';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import { addCardToDeck } from '../../actions';
 import { submitCardToDeck } from '../../utils/api';
+import type { CardType, DeckType, NavigationType } from '../../utils/types';
 import NewCardForm from './NewCardForm';
+
+type PropsType = {
+  deck: DeckType,
+  navigation: NavigationType,
+  addCardToDeck: (values: DeckType, deckId: string) => void,
+}
+
+type StateType = {
+  title: string,
+  questions: CardType,
+}
 
 /**
   * AddNewCard receives data from NewCardForm and handles storage logic.
   * It receives decks props and dispatch addCardToDeck action.
   */
-class AddNewCard extends PureComponent {
+class AddNewCard extends PureComponent<PropsType, StateType> {
   static navigationOptions = {
     title: 'Add new card',
-  }
-  static propTypes = {
-    deck: PropTypes.object.isRequired,
-    navigation: PropTypes.object.isRequired
   }
   state = {
     title: '',

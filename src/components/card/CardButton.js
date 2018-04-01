@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import {
   Alert,
@@ -5,7 +7,15 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import PropTypes from 'prop-types';
+import type { StyleType } from '../../utils/types';
+
+type PropsType = {
+  onPress: () => void,
+  text: string,
+  status: string,
+  styleButton: StyleType | Array<StyleType>,
+  styleButtonText: StyleType,
+}
 
 const CardButton = ({
   onPress,
@@ -13,7 +23,7 @@ const CardButton = ({
   status,
   styleButton,
   styleButtonText
-}) => (
+}: PropsType) => (
   <TouchableOpacity
     onPress={status === 'question'
       ? () => Alert.alert('You have to answer first.')
@@ -23,13 +33,4 @@ const CardButton = ({
     <Text style={styleButtonText}>{text}</Text>
   </TouchableOpacity>
 )
-
-CardButton.propTypes = {
-  onPress: PropTypes.func.isRequired,
-  text: PropTypes.string.isRequired,
-  status: PropTypes.string.isRequired,
-  styleButton: PropTypes.any,
-  styleButtonText: PropTypes.object,
-};
-
 export default CardButton;

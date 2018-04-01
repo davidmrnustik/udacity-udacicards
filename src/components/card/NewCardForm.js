@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import {
   Text,
@@ -6,9 +8,9 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import { Field, reduxForm } from 'redux-form';
-import PropTypes from 'prop-types';
+import { Field, reduxForm, type FormProps } from 'redux-form';
 import { commonStyle } from '../../utils/variables';
+import type { QuestionType, DecksType } from '../../utils/types';
 
 /**
   * Frontend validation functionality when adding a new card.
@@ -54,13 +56,17 @@ const renderField = ({
   )
 }
 
+type PropsType = {
+  onSubmit: (values: QuestionType) => void,
+} & FormProps
+
 /**
   * NewCardForm handles form for create a new card
   * with question and answer.
   * It uses redux-form to handle form data and validate them.
   * https://redux-form.com/7.2.0/examples/
   */
-let NewCardForm = ({ onSubmit, handleSubmit }) => {
+let NewCardForm = ({ onSubmit, handleSubmit }: PropsType) => {
   const submit = values => {
     onSubmit(values);
   }
@@ -82,11 +88,6 @@ let NewCardForm = ({ onSubmit, handleSubmit }) => {
       </TouchableOpacity>
     </View>
   )
-}
-
-NewCardForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
 }
 
 const styles = StyleSheet.create({

@@ -1,3 +1,5 @@
+// @flow
+
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import {
@@ -8,21 +10,28 @@ import {
   Platform
 } from 'react-native';
 import { NavigationActions } from 'react-navigation';
-import PropTypes from 'prop-types';
 import NewDeckForm from './NewDeckForm';
+import type { DeckType, DecksType, NavigationType } from '../../utils/types';
 import { submitDeck } from '../../utils/api';
 import { addDeck } from '../../actions';
 import { commonColor } from '../../utils/variables';
+
+type PropsType = {
+  decks: DecksType,
+  navigation: NavigationType,
+  addDeck: (deck: DeckType) => void,
+}
+
+type StateType = {
+  deck: DeckType,
+  decks: DecksType,
+}
 
 /**
   * AddNewDeck receives data from NewDeckForm and handles storage logic.
   * It receives decks props and dispatch addDeck action.
   */
- class AddNewDeck extends PureComponent {
-  static propTypes = {
-    decks: PropTypes.object,
-    navigation: PropTypes.object.isRequired
-  }
+ class AddNewDeck extends PureComponent<PropsType, StateType> {
   state = {
     deck: {
       title: '',

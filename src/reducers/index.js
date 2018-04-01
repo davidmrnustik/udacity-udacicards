@@ -1,3 +1,5 @@
+// @flow
+
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import {
@@ -6,32 +8,32 @@ import {
   ADD_CARD_TO_DECK,
 } from '../actions';
 
-function decks(state = {}, action) {
+function decks(state = {}, action: any) {
   switch(action.type) {
     case RECEIVE_DECKS:
       return {
         ...state,
         ...action.decks,
       };
-      case ADD_DECK:
+    case ADD_DECK:
+      return {
+        ...state,
+        [action.deck.title]: {
+          ...action.deck,
+        }
+      };
+    case ADD_CARD_TO_DECK:
+      const { card, deck } = action.payload;
         return {
           ...state,
-          [action.deck.title]: {
-            ...action.deck,
+          [deck]: {
+            ...state[deck],
+            questions: [
+              ...state[deck]['questions'],
+              card,
+            ]
           }
         };
-      case ADD_CARD_TO_DECK:
-        const { card, deck } = action.payload;
-          return {
-            ...state,
-            [deck]: {
-              ...state[deck],
-              questions: [
-                ...state[deck]['questions'],
-                card,
-              ]
-            }
-          };
     default:
       return state;
   }

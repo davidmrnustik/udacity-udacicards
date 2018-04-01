@@ -1,3 +1,5 @@
+// @flow
+
 import React, { PureComponent } from 'react';
 import { MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 import {
@@ -94,7 +96,7 @@ const MainNavigator = StackNavigator({
   * and Add New Card.
   * Tab Navigator handles Deck List and Add New Deck.
   */
-export default class App extends PureComponent {
+export default class App extends PureComponent<{}> {
   componentDidMount() {
     setLocalNotification();
   }

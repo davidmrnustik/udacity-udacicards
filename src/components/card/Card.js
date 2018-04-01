@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import {
   View,
@@ -6,9 +8,24 @@ import {
   StyleSheet,
   Alert,
 } from 'react-native';
-import PropTypes from 'prop-types';
 import CardButton from './CardButton';
 import { commonColor, commonStyle } from '../../utils/variables';
+
+type PropsType = {
+  questionIndex: number,
+  length: ?number,
+  title: string,
+  status: string,
+  last: ?boolean,
+  onPressCorrect: () => void,
+  onPressIncorrect: () => void,
+  onPressQuestion: () => void,
+  onPressAnswer: () => void,
+  onPressRestartQuiz: () => void,
+  onPressGoBack: () => void,
+  voted: ?boolean,
+  score: ?number,
+}
 
 /**
   * Stateless component Card renders card detail with props from Quiz.
@@ -27,7 +44,7 @@ const Card = ({
   onPressGoBack,
   voted,
   score,
-}) => (
+}: PropsType) => (
   <View style={styles.container}>
     <Text style={styles.pager}>{questionIndex + 1} / {length}</Text>
     <View style={styles.titleContainer}>
@@ -137,21 +154,5 @@ const styles = StyleSheet.create({
     marginHorizontal: 10
   }
 })
-
-Card.propTypes = {
-  questionIndex: PropTypes.number.isRequired,
-  length: PropTypes.number,
-  title: PropTypes.string.isRequired,
-  status: PropTypes.string.isRequired,
-  last: PropTypes.bool,
-  voted: PropTypes.bool,
-  score: PropTypes.number,
-  onPressCorrect: PropTypes.func.isRequired,
-  onPressIncorrect: PropTypes.func.isRequired,
-  onPressQuestion: PropTypes.func.isRequired,
-  onPressAnswer: PropTypes.func.isRequired,
-  onPressRestartQuiz: PropTypes.func.isRequired,
-  onPressGoBack: PropTypes.func.isRequired,
-}
 
 export default Card;

@@ -1,3 +1,5 @@
+// @flow
+
 export const commonColor = {
   buttonUnderlayColor: '#e0d6c1',
   brown: '#968d72',

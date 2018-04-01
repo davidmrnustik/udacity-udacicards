@@ -1,3 +1,5 @@
+// @flow
+
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import {
@@ -6,24 +8,25 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import PropTypes from 'prop-types';
+import type { DeckType, NavigationType } from '../../utils/types';
 import { commonColor, commonStyle } from '../../utils/variables';
+
+type PropsType = {
+  deck: DeckType,
+  navigation: NavigationType,
+}
 
 /**
   * DeckDetail renders deck detail.
   * It receives decks props and deckId parsed from navigation params.
   */
-class DeckDetail extends PureComponent {
+class DeckDetail extends PureComponent<PropsType> {
   static navigationOptions = ({ navigation }) => {
     const { deckId } = navigation.state.params;
 
     return {
       title: deckId,
     }
-  }
-  static propTypes = {
-    deck: PropTypes.object.isRequired,
-    navigation: PropTypes.object.isRequired
   }
   render() {
     const { navigation, deck } = this.props;

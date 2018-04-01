@@ -1,3 +1,5 @@
+// @flow
+
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import {
@@ -9,20 +11,26 @@ import {
   Platform
 } from 'react-native';
 import { receiveDecks } from '../../actions';
-import PropTypes from 'prop-types';
 import { getDecks } from '../../utils/api';
+import type { DecksType, NavigationType } from '../../utils/types';
 import Deck from './Deck';
 import { commonColor } from '../../utils/variables';
+
+type PropsType = {
+  decks: DecksType,
+  navigation: NavigationType,
+  receiveDecks: (decks: DecksType) => void,
+}
+
+type StateType = {
+  loading: boolean,
+}
 
 /**
   * DeckList renders list of decks, it's consider as a home page.
   * It receives decks props and dispatch receiveDecks action.
   */
-class DeckList extends PureComponent {
-  static propTypes = {
-    decks: PropTypes.object,
-    navigation: PropTypes.object.isRequired
-  }
+class DeckList extends PureComponent<PropsType, StateType> {
   state = {
     loading: false,
   }
@@ -54,7 +62,7 @@ class DeckList extends PureComponent {
                 <ScrollView>
                   {Object.keys(decks).map((deck, index) => {
                   const { title, questions } = decks[deck];
-                  const questionLength = questions.length;
+                  const questionLength = questions ? questions.length : null;
                   return (
                     <View key={index} style={styles.deck}>
                       <Deck

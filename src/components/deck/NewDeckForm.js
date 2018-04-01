@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import {
   Text,
@@ -7,8 +9,7 @@ import {
   StyleSheet
 } from 'react-native';
 import { connect } from 'react-redux';
-import { Field, reduxForm } from 'redux-form';
-import PropTypes from 'prop-types';
+import { Field, reduxForm, type FormProps } from 'redux-form';
 import { commonStyle } from '../../utils/variables';
 
 /**
@@ -55,12 +56,16 @@ const renderField = ({
   )
 }
 
+type PropsType = {
+  onSubmit: (value: string) => void,
+} & FormProps
+
 /**
   * NewDeckForm handles form for create a new deck.
   * It uses redux-form to handle form data and validate them.
   * https://redux-form.com/7.2.0/examples/
   */
-let NewDeckForm = ({ onSubmit, handleSubmit }) => {
+let NewDeckForm = ({ onSubmit, handleSubmit }: PropsType) => {
   const submit = values => {
     onSubmit(values);
   }
@@ -75,11 +80,6 @@ let NewDeckForm = ({ onSubmit, handleSubmit }) => {
       </TouchableOpacity>
     </View>
   )
-}
-
-NewDeckForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
 }
 
 const styles = {

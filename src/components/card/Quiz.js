@@ -1,3 +1,5 @@
+// @flow
+
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import {
@@ -7,25 +9,33 @@ import {
   Alert,
 } from 'react-native';
 import { NavigationActions } from 'react-navigation';
-import PropTypes from 'prop-types';
 import {
   setLocalNotification,
   clearLocalNotification,
 } from '../../utils/helpers';
+import type { CardType, NavigationType } from '../../utils/types';
 import Card from './Card';
+
+type PropsType = {
+  questions: CardType,
+  navigation: NavigationType,
+}
+
+type StateType = {
+  questionIndex: number,
+  status: string,
+  score: ?number,
+  voted: boolean,
+}
 
 /**
   * Quiz component contains functionality to question, answer and vote.
   * It also calculates users score.
   * It receives decks props and deckId that is parsed from navigation params.
   */
-class Quiz extends PureComponent {
+class Quiz extends PureComponent<PropsType, StateType> {
   static navigationOptions = {
     title: 'Quiz',
-  }
-  static propTypes = {
-    questions: PropTypes.array,
-    navigation: PropTypes.object.isRequired
   }
   state = {
     questionIndex: 0,
