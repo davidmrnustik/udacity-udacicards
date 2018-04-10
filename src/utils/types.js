@@ -24,11 +24,11 @@ export type DecksType = {
   },
 }
 
-type ActionType = typeof RECEIVE_DECKS | typeof ADD_DECK | typeof ADD_CARD_TO_DECK;
+// type ActionType = typeof RECEIVE_DECKS | typeof ADD_DECK | typeof ADD_CARD_TO_DECK;
 
-export type DecksAction = { type: ActionType, decks: DecksType };
-export type DeckAction = { type: ActionType, deck: DeckType };
-export type CardToDeckAction = { type: ActionType, payload: {
+export type DecksAction = { type: typeof RECEIVE_DECKS, decks: DecksType };
+export type DeckAction = { type: typeof ADD_DECK, deck: DeckType };
+export type CardToDeckAction = { type: typeof ADD_CARD_TO_DECK, payload: {
   card: CardType,
   deck: string,
 } };

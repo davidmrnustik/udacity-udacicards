@@ -7,8 +7,9 @@ import {
   ADD_DECK,
   ADD_CARD_TO_DECK,
 } from '../actions';
+import type { Action } from '../utils/types';
 
-function decks(state = {}, action: any) {
+function decks(state = {}, action: Action) {
   switch(action.type) {
     case RECEIVE_DECKS:
       return {
